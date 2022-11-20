@@ -1,11 +1,16 @@
 import { Outlet } from 'react-router-dom';
 import { AppMenu } from './AppMenu/AppMenu';
+import Box from 'Box';
 
 export const Layout = () => {
   return (
-    <div>
-      <AppMenu />
-      <Outlet />
-    </div>
+    <>
+      <Box as="header">
+        <AppMenu />
+      </Box>
+      <Box as="main">
+        <Outlet />
+      </Box>
+    </>
   );
 };
