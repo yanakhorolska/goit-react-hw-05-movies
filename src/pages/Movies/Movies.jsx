@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { fetchSearchApi } from 'components/fetchApi';
-import { useSearchParams, useLocation, Link } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import Box from 'Box';
 import {
   MoviesForm,
   MoviesInput,
   MoviesList,
-  MoviesItem,
   MoviesSearchButton,
   MovieTitle,
   LinkItem,

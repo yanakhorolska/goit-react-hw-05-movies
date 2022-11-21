@@ -1,6 +1,6 @@
 import { useParams, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { fetchMovieDetails, fetchMovieGenres } from 'components/fetchApi';
+import { fetchMovieDetails } from 'components/fetchApi';
 import {
   MovieCard,
   MovieImg,
