@@ -4,7 +4,7 @@ export const AppMenu = () => {
   return (
     <NavList>
       <NavItem to="/">Home</NavItem>
-      <NavItem>Movies</NavItem>
+      <NavItem to="/movies">Movies</NavItem>
     </NavList>
   );
 };

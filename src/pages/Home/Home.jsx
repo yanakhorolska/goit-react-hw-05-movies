@@ -36,7 +36,7 @@ export const Home = () => {
             }
 
             return (
-              <NavItem key={movie.id}>
+              <NavItem key={movie.id} to={`/movies/${movie.id}`}>
                 <img src={posterPath} alt={movie.title} />
                 <NavTitle>{movie.title}</NavTitle>
               </NavItem>
