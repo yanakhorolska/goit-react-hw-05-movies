@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 export const TrendingList = styled('ul')`
   padding: 50px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   gap: 30px;
   flex-wrap: wrap;
 `;

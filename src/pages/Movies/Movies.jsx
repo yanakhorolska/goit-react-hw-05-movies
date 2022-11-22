@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchSearchApi } from 'components/fetchApi';
 import { useSearchParams, useLocation } from 'react-router-dom';
-import Box from 'Box';
+import Notiflix from 'notiflix';
 import {
   MoviesForm,
   MoviesInput,
@@ -14,67 +14,79 @@ import {
 export const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [error, setError] = useState(null);
+  const [input, setInput] = useState('');
   const inputParam = searchParams.get('filter') ?? '';
   const location = useLocation();
 
-  const onSubmit = e => {
-    e.preventDefault();
+  useEffect(() => {
+    if (!inputParam) {
+      return;
+    }
     async function fetch() {
       try {
         const { results } = await fetchSearchApi(inputParam);
+        if (results.length < 1) {
+          Notiflix.Notify.warning("We can't find it, try again");
+        }
         setMovies(results);
       } catch (error) {
-        setError(error.message);
+        Notiflix.Notify.warning('Something wrong, try again please');
       }
     }
     fetch();
+  }, [inputParam]);
+
+  const onSubmit = e => {
+    if (!input) {
+      Notiflix.Notify.warning('Please fill in the gap');
+    }
+    e.preventDefault();
+    setSearchParams(input !== '' ? { filter: input } : {});
+    setInput('');
   };
+
   const onChangeInput = value => {
-    setSearchParams(value !== '' ? { filter: value } : {});
+    setInput(value);
   };
+
   if (!movies) {
     return null;
   }
-  let posterPath;
-  // for (const movie of movies) {
-  //   if (movie.poster_path) {
-  //     posterPath = `https://image.tmdb.org/t/p/w400/${movie.poster_path}`;
-  //   } else {
-  //     posterPath =
-  //       'https://cdn.create.vista.com/api/media/small/324908572/stock-vector-3d-cinema-film-strip-in';
-  //   }
-  // }
 
   return (
-    <Box display="block">
+    <>
       <MoviesForm onSubmit={onSubmit}>
         <MoviesInput
           type="text"
-          value={inputParam}
+          value={input}
           name="input"
           onChange={e => onChangeInput(e.currentTarget.value.toLowerCase())}
         />
         <MoviesSearchButton type="submit">Search</MoviesSearchButton>
       </MoviesForm>
-      {error && <p>{error}</p>}
       {movies && (
         <MoviesList>
           {movies.map(movie => {
-            posterPath = `https://image.tmdb.org/t/p/w400/${movie.poster_path}`;
+            let posterPath;
+            if (movie.poster_path) {
+              posterPath = `https://image.tmdb.org/t/p/w400/${movie.poster_path}`;
+            } else {
+              posterPath =
+                'https://i.pinimg.com/originals/a0/57/48/a05748c84d7093e382c560bbc57665ce.jpg';
+            }
             return (
               <LinkItem
                 key={movie.id}
                 to={`${movie.id}`}
                 state={{ from: location }}
               >
-                <img src={posterPath} alt={movie.title} />
+                <img src={posterPath} width="425" alt={movie.title} />
                 <MovieTitle>{movie.title}</MovieTitle>
               </LinkItem>
             );
           })}
         </MoviesList>
       )}
-    </Box>
+    </>
   );
 };

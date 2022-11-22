@@ -1,6 +1,7 @@
 import { fetchTrendingApi } from '../../components/fetchApi';
 import { useState, useEffect } from 'react';
-import Box from 'Box';
+import Notiflix from 'notiflix';
+
 import {
   TrendingList,
   NavItem,
@@ -15,14 +16,21 @@ export const Home = () => {
 
   useEffect(() => {
     async function moviesFetch() {
-      const { results } = await fetchTrendingApi();
-      setTrendings(results);
-      console.log(results);
+      try {
+        const { results } = await fetchTrendingApi();
+        if (results < 1) {
+          Notiflix.Notify.warning("We can't find it, try again");
+        }
+        setTrendings(results);
+      } catch {
+        Notiflix.Notify.warning('Something wrong, try again please');
+      }
     }
     moviesFetch();
   }, []);
+
   return (
-    <Box as="div" display="block">
+    <>
       <TrendingTitle>Trending movies</TrendingTitle>
       {trendings && (
         <TrendingList>
@@ -32,18 +40,18 @@ export const Home = () => {
               posterPath = `https://image.tmdb.org/t/p/w400/${movie.poster_path}`;
             } else {
               posterPath =
-                'https://cdn.create.vista.com/api/media/small/324908572/stock-vector-3d-cinema-film-strip-in';
+                'https://i.pinimg.com/originals/a0/57/48/a05748c84d7093e382c560bbc57665ce.jpg';
             }
 
             return (
               <NavItem key={movie.id} to={`/movies/${movie.id}`}>
-                <img src={posterPath} alt={movie.title} />
+                <img src={posterPath} width="425" alt={movie.title} />
                 <NavTitle>{movie.title}</NavTitle>
               </NavItem>
             );
           })}
         </TrendingList>
       )}
-    </Box>
+    </>
   );
 };

@@ -1,6 +1,7 @@
-import { useParams, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useParams, useLocation, Outlet } from 'react-router-dom';
+import { useState, useEffect, Suspense } from 'react';
 import { fetchMovieDetails } from 'components/fetchApi';
+
 import {
   MovieCard,
   MovieImg,
@@ -17,12 +18,12 @@ import {
   LinkButton,
   LinkBox,
 } from './MovieDetails.styled';
-import Box from 'Box';
 
 export const MovieDetails = () => {
   const location = useLocation();
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
+  const backLinkHref = location.state?.from ?? '/';
 
   useEffect(() => {
     fetchMovieDetails(Number(movieId)).then(setMovie);
@@ -41,12 +42,10 @@ export const MovieDetails = () => {
   }
   const { overview, title, release_date, genres, vote_average } = movie;
   return (
-    <Box as="div" display="block" width="100%">
+    <>
       <LinkBox>
         {' '}
-        <LinkButton to={location.state?.from ?? '/movies'}>
-          Back to all movies
-        </LinkButton>
+        <LinkButton to={backLinkHref}>Back to all movies</LinkButton>
       </LinkBox>
       <MovieCard>
         <MovieImg src={posterPath} alt={title} />
@@ -66,9 +65,17 @@ export const MovieDetails = () => {
 
       <MovieAdditional>
         <MovieAdditionalTitle>Additiona information</MovieAdditionalTitle>
-        <NavItem>Cast</NavItem>
-        <NavItem>Reviews</NavItem>
+        <NavItem to={'cast'} state={location.state}>
+          Cast
+        </NavItem>
+        <NavItem to={'reviews'} state={location.state}>
+          Reviews
+        </NavItem>
       </MovieAdditional>
-    </Box>
+
+      <Suspense fallback={null}>
+        <Outlet />
+      </Suspense>
+    </>
   );
 };

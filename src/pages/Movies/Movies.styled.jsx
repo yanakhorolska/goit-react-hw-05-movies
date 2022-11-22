@@ -1,19 +1,17 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-// import {
-//   MoviesForm,
-//   MoviesInput,
-//   MoviesList,
-//   MoviesItem,
-//   MoviesSearchButton,
-// } from './Movies.styled.jsx';
+
 export const LinkItem = styled(Link)`
   text-decoration: none;
-  width: calc(100% / 4 - 20px);
+  width: calc(100% / 4 - 30px);
   background-color: black;
   margin: 0;
   display: flex;
   flex-direction: column;
+  &:hover {
+    scale: calc(1.03);
+    box-shadow: 0px 0px 20px 8px gray;
+  }
 `;
 export const MovieTitle = styled('p')`
   font-size: 20px;
@@ -36,7 +34,7 @@ export const MoviesInput = styled('input')`
 export const MoviesList = styled('div')`
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 30px;
   margin: 0;
   padding: 50px;
 `;

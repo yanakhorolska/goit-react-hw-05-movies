@@ -27,3 +27,15 @@ export const fetchMovieGenres = async () => {
   );
   return data;
 };
+export const fetchCast = async id => {
+  const { data } = await axios.get(
+    `/movie/${id}/credits?api_key=${API_KEY}&language=en-US`
+  );
+  return data;
+};
+export const fetchReview = async id => {
+  const { data } = await axios.get(
+    `/movie/${id}/reviews?api_key=${API_KEY}&language=en-US&page=1`
+  );
+  return data;
+};

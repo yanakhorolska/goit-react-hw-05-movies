@@ -16,7 +16,7 @@ export const NavItem = styled(NavLink)`
 export const NavList = styled('nav')`
   background-color: black;
   display: flex;
-  width: 100%;
+
   padding: 20px;
   gap: 25px;
 `;
