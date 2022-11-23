@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { fetchReview } from 'components/fetchApi';
+import { fetchReview } from 'api/fetchApi';
 import { ReviewsError } from './Reviews.styled';
 
 export const Reviews = () => {

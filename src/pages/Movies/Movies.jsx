@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchSearchApi } from 'components/fetchApi';
+import { fetchSearchApi } from 'api/fetchApi';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import Notiflix from 'notiflix';
 import {
@@ -9,7 +9,7 @@ import {
   MoviesSearchButton,
   MovieTitle,
   LinkItem,
-} from './Movies.styled.jsx';
+} from '../Pages.styled';
 
 export const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -80,7 +80,7 @@ export const Movies = () => {
                 to={`${movie.id}`}
                 state={{ from: location }}
               >
-                <img src={posterPath} width="425" alt={movie.title} />
+                <img src={posterPath} width="400" alt={movie.title} />
                 <MovieTitle>{movie.title}</MovieTitle>
               </LinkItem>
             );

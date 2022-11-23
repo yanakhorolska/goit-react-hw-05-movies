@@ -5,9 +5,7 @@ import { Suspense } from 'react';
 export const Layout = () => {
   return (
     <>
-      <>
-        <AppMenu />
-      </>
+      <AppMenu />
       <Suspense fallback={null}>
         <Outlet />
       </Suspense>

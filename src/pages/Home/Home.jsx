@@ -1,13 +1,13 @@
-import { fetchTrendingApi } from '../../components/fetchApi';
+import { fetchTrendingApi } from '../../api/fetchApi';
 import { useState, useEffect } from 'react';
 import Notiflix from 'notiflix';
 
 import {
-  TrendingList,
-  NavItem,
-  NavTitle,
+  MoviesList,
+  LinkItem,
+  MovieTitle,
   TrendingTitle,
-} from './Home.styled.jsx';
+} from '../Pages.styled';
 
 // import { MovieDetails } from 'components/MovieDetails/MovieDetails';
 
@@ -33,7 +33,7 @@ export const Home = () => {
     <>
       <TrendingTitle>Trending movies</TrendingTitle>
       {trendings && (
-        <TrendingList>
+        <MoviesList>
           {trendings.map(movie => {
             let posterPath;
             if (movie.poster_path) {
@@ -44,13 +44,13 @@ export const Home = () => {
             }
 
             return (
-              <NavItem key={movie.id} to={`/movies/${movie.id}`}>
-                <img src={posterPath} width="425" alt={movie.title} />
-                <NavTitle>{movie.title}</NavTitle>
-              </NavItem>
+              <LinkItem key={movie.id} to={`/movies/${movie.id}`}>
+                <img src={posterPath} width="400" alt={movie.title} />
+                <MovieTitle>{movie.title}</MovieTitle>
+              </LinkItem>
             );
           })}
-        </TrendingList>
+        </MoviesList>
       )}
     </>
   );
